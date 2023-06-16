@@ -5,12 +5,14 @@ async function getRepos() {
   const response = await fetch("https://api.github.com/users/jotunnjs/repos");
   const repos = response.json();
 
+  await new Promise((resolve) => {
+    setTimeout(resolve, 1000);
+  });
   return repos;
 }
 
 const Repose = async () => {
   const repos = await getRepos();
-  console.log("🚀 *** file: page.tsx:11 *** Repose *** repos:", repos);
   return (
     <div>
       <h1>Repos</h1>
@@ -20,7 +22,7 @@ const Repose = async () => {
           return (
             <div key={repo.id} className="flex flex-col pb-3">
               <dt className="mb-1 text-gray-500 md:text-lg dark:text-gray-400">
-                <Link href={repo.html_url}>
+                <Link href={`/code/repos/${repo.name}`}>
                   <h1>{repo.name}</h1>
                   <p>{repo.description}</p>
                   <div className="flex">
